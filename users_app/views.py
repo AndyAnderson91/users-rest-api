@@ -16,11 +16,13 @@ def users_list(request, format=None):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = WriteOnlyUserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        write_serializer = WriteOnlyUserSerializer(data=request.data)
+        if write_serializer.is_valid():
+            write_serializer.save()
+            user = User.objects.get(username=request.data['username'])
+            read_serializer = ReadOnlyUserSerializer(user)
+            return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
@@ -34,16 +36,17 @@ def user_detail(request, pk, format=None):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = ReadOnlyUserSerializer(user)
-        return Response(serializer.data)
+        read_serializer = ReadOnlyUserSerializer(user)
+        return Response(read_serializer.data)
 
     elif request.method in ('PUT', 'PATCH'):
         partial = True if request.method == 'PATCH' else False
-        serializer = WriteOnlyUserSerializer(user, data=request.data, partial=partial)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        write_serializer = WriteOnlyUserSerializer(user, data=request.data, partial=partial)
+        if write_serializer.is_valid():
+            write_serializer.save()
+            read_serializer = ReadOnlyUserSerializer(user)
+            return Response(read_serializer.data)
+        return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         user.is_active = False
