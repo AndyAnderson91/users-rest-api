@@ -1,19 +1,29 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
 from users_app.serializers import UserSerializer
-from .permissions import CustomIsAuthenticated, CustomIsAdminUser, IsReadOnly, IsWriteOnly, IsActive, IsOwner
+from .permissions import (
+    CustomIsAuthenticated,
+    CustomIsAdminUser,
+    IsReadOnly,
+    IsWriteOnly,
+    IsActive,
+    IsOwner,
+)
 
 
-class ListCreateUserView(generics.ListCreateAPIView):
+class UserListCreate(generics.ListCreateAPIView):
     """
     List all users or create a new user.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [CustomIsAuthenticated & IsActive | IsWriteOnly]
+    permission_classes = [
+        (CustomIsAuthenticated & IsActive) |
+        IsWriteOnly
+    ]
 
 
-class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update or delete User instance.
     """

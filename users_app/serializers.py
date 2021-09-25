@@ -22,7 +22,6 @@ class UserSerializer(serializers.ModelSerializer):
             'is_superuser',
         ]
         extra_kwargs = {
-            'first_name': {'max_length': 30},
             'is_active': {'required': True},
             'password': {'write_only': True},
         }
