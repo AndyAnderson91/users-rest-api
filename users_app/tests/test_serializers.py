@@ -1,8 +1,14 @@
+"""
+Contains tests for UserSerializer class.
+"""
+
 import pytest
 from datetime import datetime
 from django.contrib.auth.models import User
 from users_app.serializers import UserSerializer
 
+
+# Constants
 
 COMPLETE_DATA = {'username': 'andy', 'password': 'mypass123', 'is_active': True}
 
@@ -19,6 +25,8 @@ BAD_PASSWORD_DATA = [
     {'username': 'andy', 'password': '583457082345', 'is_active': True},
 ]
 
+
+# UserSerializer tests
 
 @pytest.mark.django_db
 def test_serializer_is_valid_if_required_fields_passed():

@@ -1,9 +1,9 @@
 """
-This module contains tests for:
-- UserCreateList view GET POST methods. (in tests titles UserCreateList shortcutted to ucl);
-- UserDetail view GET PUT PATCH DELETE methods. (in tests titles UserDetail shortcutted to ud).
+Contains tests for:
+- UserCreateList view get, post methods. (in tests titles UserCreateList shortcutted to ucl);
+- UserDetail view get, put, patch, delete methods. (in tests titles UserDetail shortcutted to ud).
 Since most of these methods (except DELETE) are inherited from built-in generic classes,
-this module only contains few tests which will be helpful in case of future custom implementation.
+this module only contains few tests which will be helpful in case of future custom implementations.
 """
 
 import pytest
@@ -20,7 +20,8 @@ PATCH_DATA = {'username': 'new_username'}
 # UserListCreate view GET method tests.
 
 @pytest.mark.django_db
-def test_ulc_get_method_return_list_of_all_users(api_client, user_list_create_url, active_user1, active_user2, inactive_user, admin_token):
+def test_ulc_get_method_return_list_of_all_users(api_client, user_list_create_url, active_user1,
+                                                 active_user2, inactive_user, admin_token):
     api_client.credentials(HTTP_AUTHORIZATION='Token ' + admin_token.key)
     bytes_data = api_client.get(user_list_create_url).content
     users_list = json.loads(bytes_data.decode('utf-8'))
@@ -72,7 +73,7 @@ def test_ud_put_method_update_required_user_data(api_client, active_user1, activ
 # UserDetail view DELETE method tests.
 
 @pytest.mark.django_db
-def test_user_detail_delete_method_set_user_is_active_to_false_instead_of_destroying_object(api_client, active_user1_detail_url, admin_token):
+def test_user_detail_delete_method_set_user_is_active_to_false_instead_of_deleting_object(api_client, active_user1_detail_url, admin_token):
     api_client.credentials(HTTP_AUTHORIZATION='Token ' + admin_token.key)
     api_client.delete(active_user1_detail_url)
     user = User.objects.get(is_staff=False)

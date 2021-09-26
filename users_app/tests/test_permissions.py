@@ -7,8 +7,8 @@ This module contains tests for listed below permission classes:
 - IsActive,
 - IsOwner.
 Tests if these permission classes applied and execute correctly in:
-- UserCreateList view GET POST methods. (in tests titles UserCreateList shortcutted to ucl);
-- UserDetail view GET PUT PATCH DELETE methods. (in tests titles UserDetail shortcutted to ud).
+- UserCreateList view (in tests titles UserCreateList shortcutted to ucl);
+- UserDetail view (in tests titles UserDetail shortcutted to ud).
 Tests are grouped by HTTP methods.
 """
 
