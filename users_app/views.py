@@ -36,5 +36,8 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     ]
 
     def perform_destroy(self, instance):
+        """
+        Set is_active attribute to False instead of deleting object.
+        """
         instance.is_active = False
         instance.save()

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = [
@@ -27,9 +28,15 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        """
+        Create new user object with helper function.
+        """
         return User.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
+        """
+        Update user object fields values. Use helper function to update password.
+        """
         for key, value in validated_data.items():
             if key == 'password':
                 instance.set_password(value)
@@ -39,5 +46,8 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     def validate_password(self, value):
+        """
+        Validate password field.
+        """
         password_validation.validate_password(value, self.instance)
         return value
