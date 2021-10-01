@@ -13,7 +13,7 @@ INACTIVE_USER_DATA = {'username': 'jamie', 'password': 'mypass123', 'is_active':
 ADMIN_USER_DATA = {'username': 'admin', 'password': 'mypass123', 'is_active': True}
 
 
-# Fixtures
+# Users
 
 @pytest.fixture
 def active_user1():
@@ -34,6 +34,8 @@ def inactive_user():
 def admin():
     return User.objects.create_superuser(**ADMIN_USER_DATA)
 
+
+# Tokens
 
 @pytest.fixture
 def active_user1_token(active_user1):
@@ -59,6 +61,8 @@ def admin_token(admin):
     return token
 
 
+# URLs
+
 @pytest.fixture
 def active_user1_detail_url(active_user1):
     return reverse('user_detail', kwargs={'pk': active_user1.pk})
@@ -73,6 +77,8 @@ def inactive_user_detail_url(inactive_user):
 def user_list_create_url():
     return reverse('user_list_create')
 
+
+# Client
 
 @pytest.fixture
 def api_client():
