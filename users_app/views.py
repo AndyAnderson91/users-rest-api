@@ -1,7 +1,8 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
 from users_app.serializers import UserSerializer
-from .permissions import UserDetailPermission
+from rest_framework.permissions import AllowAny
+from .permissions import IsAdminUserOrOwnerOrReadOnly
 
 
 class UserListCreate(generics.ListCreateAPIView):
@@ -10,6 +11,8 @@ class UserListCreate(generics.ListCreateAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    # Explicit is better than implicit.
+    permission_classes = [AllowAny, ]
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -18,7 +21,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [UserDetailPermission, ]
+    permission_classes = [IsAdminUserOrOwnerOrReadOnly, ]
 
     def perform_destroy(self, instance):
         """

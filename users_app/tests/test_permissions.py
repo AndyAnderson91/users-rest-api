@@ -1,5 +1,5 @@
 """
-Contains permissions tests.
+This module tests if request methods are accessible according to permissions.
 Tests are grouped by HTTP methods.
 """
 
