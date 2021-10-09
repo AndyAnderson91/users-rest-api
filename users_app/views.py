@@ -1,7 +1,7 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
 from users_app.serializers import UserSerializer
-from .permissions import UserListCreatePermission, UserDetailPermission
+from .permissions import UserDetailPermission
 
 
 class UserListCreate(generics.ListCreateAPIView):
@@ -10,7 +10,6 @@ class UserListCreate(generics.ListCreateAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [UserListCreatePermission, ]
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):

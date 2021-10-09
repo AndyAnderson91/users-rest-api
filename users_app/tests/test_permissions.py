@@ -1,10 +1,5 @@
 """
-This module contains tests for listed below permission classes:
-- UserListCreatePermission,
-- UserDetailPermission,
-Tests if these permission classes applied and execute correctly in:
-- UserCreateList view (in tests titles UserCreateList shortcutted to ucl);
-- UserDetail view (in tests titles UserDetail shortcutted to ud).
+Contains permissions tests.
 Tests are grouped by HTTP methods.
 """
 
@@ -20,21 +15,7 @@ PATCH_DATA = {'username': 'new_username'}
 # UserListCreate view GET method tests.
 
 @pytest.mark.django_db
-def test_ulc_get_method_is_not_allowed_to_unauthenticated_user(api_client, user_list_create_url):
-    response = api_client.get(user_list_create_url)
-    assert response.status_code == 401
-
-
-@pytest.mark.django_db
-def test_ulc_get_method_is_not_allowed_to_inactive_user(api_client, user_list_create_url, inactive_user_token):
-    api_client.credentials(HTTP_AUTHORIZATION='Token ' + inactive_user_token.key)
-    response = api_client.get(user_list_create_url)
-    assert response.status_code == 401
-
-
-@pytest.mark.django_db
-def test_ulc_get_method_is_allowed_to_active_authenticated_user(api_client, user_list_create_url, active_user1_token):
-    api_client.credentials(HTTP_AUTHORIZATION='Token ' + active_user1_token.key)
+def test_ulc_get_method_is_allowed_to_any_user(api_client, user_list_create_url):
     response = api_client.get(user_list_create_url)
     assert response.status_code == 200
 
@@ -50,21 +31,7 @@ def test_ulc_post_method_is_allowed_to_any_user(api_client, user_list_create_url
 # UserDetail view GET method tests.
 
 @pytest.mark.django_db
-def test_ud_get_method_is_not_allowed_to_unauthenticated_user(api_client, active_user1_detail_url):
-    response = api_client.get(active_user1_detail_url)
-    assert response.status_code == 401
-
-
-@pytest.mark.django_db
-def test_ud_get_method_is_not_allowed_to_inactive_user(api_client, active_user1_detail_url, inactive_user_token):
-    api_client.credentials(HTTP_AUTHORIZATION='Token ' + inactive_user_token.key)
-    response = api_client.get(active_user1_detail_url)
-    assert response.status_code == 401
-
-
-@pytest.mark.django_db
-def test_ud_get_method_is_allowed_to_active_authenticated_user(api_client, active_user1_detail_url, active_user2_token):
-    api_client.credentials(HTTP_AUTHORIZATION='Token ' + active_user2_token.key)
+def test_ud_get_method_is_allowed_to_any_user(api_client, active_user1_detail_url):
     response = api_client.get(active_user1_detail_url)
     assert response.status_code == 200
 
