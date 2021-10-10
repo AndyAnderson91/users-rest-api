@@ -33,7 +33,10 @@ SECRET_KEY = config('SECRET_KEY', default=GUEST_SECRET_KEY)
 
 DEBUG = config('DEBUG', default='False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'users-rest-api-drf.herokuapp.com'
+]
 
 
 # Application definition
