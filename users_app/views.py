@@ -1,5 +1,6 @@
 from rest_framework import generics
 from django.contrib.auth.models import User
+from django.views import generic
 from users_app.serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from .permissions import IsAdminUserOrOwnerOrReadOnly
@@ -29,3 +30,11 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         """
         instance.is_active = False
         instance.save()
+
+
+class IndexRedirectView(generic.RedirectView):
+    """
+    Redirect user to user_list_create url.
+    """
+    http_method_names = ['get', 'head', 'options']
+    pattern_name = 'users_app:user_list_create'
