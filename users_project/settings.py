@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +22,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3azbuvcpr64&h2)mkumnqqlz8$gdu!#i3uu=aw)k#a+llpst6x'
+
+# Allows any user to run app locally. Differs from secret key used in production.
+GUEST_SECRET_KEY = 'django-insecure-3azbuvcpr64&h2)mkumnqqlz8$gdu!#i3uu=aw)k#a+llpst6x'
+
+SECRET_KEY = config('SECRET_KEY', default=GUEST_SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = [
+    'localhost',
+    'users-rest-api-drf.herokuapp.com',
+]
 
 
 # Application definition
@@ -146,6 +154,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Activate Django-Heroku
-django_heroku.settings(locals())
