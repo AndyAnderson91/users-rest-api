@@ -65,17 +65,17 @@ def admin_token(admin):
 
 @pytest.fixture
 def active_user1_detail_url(active_user1):
-    return reverse('user_detail', kwargs={'pk': active_user1.pk})
+    return reverse('users_app:user_detail', kwargs={'pk': active_user1.pk})
 
 
 @pytest.fixture
 def inactive_user_detail_url(inactive_user):
-    return reverse('user_detail', kwargs={'pk': inactive_user.pk})
+    return reverse('users_app:user_detail', kwargs={'pk': inactive_user.pk})
 
 
 @pytest.fixture
 def user_list_create_url():
-    return reverse('user_list_create')
+    return reverse('users_app:user_list_create')
 
 
 # Client
