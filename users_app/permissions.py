@@ -7,8 +7,10 @@ class IsAdminUserOrOwnerOrReadOnly(BasePermission):
     Other methods: allowed to account owner or admin.
     """
     def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
+
         return bool(
-            request.method in SAFE_METHODS or
-            request.user.is_staff or
-            request.user == obj
+            request.user and
+            (request.user.is_staff or request.user == obj)
         )
