@@ -41,17 +41,18 @@ Provide CRUD operations on user objects in database.
 `source venv/bin/activate`
 #### 4. Install all required dependencies:
 `pip install -r requirements.txt`
-#### 5. Apply the migrations:
+#### 5. Collect static files:
+`python manage.py collectstatic`
+#### 6. Apply the migrations:
 `python manage.py migrate`
-#### 6. Create superuser:
+#### 7. Create superuser:
 `python manage.py createsuperuser`
-#### 7. Run server:
+#### 8. Run server:
 `python manage.py runserver`
-#### 8. From now local version is available at http://127.0.0.1:8000
+#### 9. From now local version is available at http://localhost:8000
 ## Testing:
 Tests cover *serializers.py*, *permissions.py* and *views.py* modules. All tests are written with *pytest-django* plugin.
-To run tests locally use:<br>
-`pytest` command in terminal
+To run tests locally use `pytest` command in terminal
 ## Credentials for [heroku version](https://users-rest-api-drf.herokuapp.com):
 #### Admin:
 * username: admin
