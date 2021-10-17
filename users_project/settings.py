@@ -35,6 +35,7 @@ DEBUG = config('DEBUG', default='False') == 'True'
 
 ALLOWED_HOSTS = [
     'localhost',
+    '127.0.0.1',
     'users-rest-api-drf.herokuapp.com'
 ]
 
